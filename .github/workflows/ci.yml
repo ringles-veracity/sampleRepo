@@ -30,7 +30,7 @@ jobs:
         id: step_two
         run: |
           echo "${{ env.action_state }}" # This will output 'yellow'
-          echo "${{ env.data_token }}
+          echo "${{ env.data_token }}"
           echo "${{ steps.step_one.databricks-client }}"
         
       - name: Install Python 3
