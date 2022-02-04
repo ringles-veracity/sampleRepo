@@ -25,7 +25,7 @@ jobs:
         id: step_two
         run: |
           echo "${{ env.action_state }}" # This will output 'yellow'
-          echo "${{ step.step_one.databricks-client }}"
+          echo "${{ steps.step_one.databricks-client }}"
         
       - name: Install Python 3
         uses: actions/setup-python@v1
