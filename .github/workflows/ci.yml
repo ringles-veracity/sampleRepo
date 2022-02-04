@@ -16,8 +16,12 @@ jobs:
       - name: Set the value
         id: step_one
         run: |
+          DATA_URL=https://www.test.com
+          DATA_TOKEN=dapi8bffa4cad8c9e19dcb80f1c15f27ba15
           DATA_BRICK_CLIENT=testing
           echo "action_state=yellow" >> $GITHUB_ENV
+          echo "$DATA_BRICK_CLIENT"
+          echo "$DATA_TOKEN"
           echo "$DATA_BRICK_CLIENT"
           echo ::set-output name=databricks-client::$DATA_BRICK_CLIENT
           
