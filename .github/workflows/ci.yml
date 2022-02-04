@@ -18,13 +18,14 @@ jobs:
         run: |
           DATA_BRICK_CLIENT=testing
           echo "action_state=yellow" >> $GITHUB_ENV
+          echo "$DATA_BRICK_CLIENT"
           echo ::set-output name=databricks-client::$DATA_BRICK_CLIENT
           
       - name: Use the value
         id: step_two
         run: |
           echo "${{ env.action_state }}" # This will output 'yellow'
-          echo "${{ steps.step_one.databricks-client }}"
+          echo "${{ step.step_one.databricks-client }}"
         
       - name: Install Python 3
         uses: actions/setup-python@v1
