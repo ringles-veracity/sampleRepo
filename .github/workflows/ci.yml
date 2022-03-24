@@ -7,7 +7,7 @@ on:
     branches:
       - master
       
-concurrency: dev
+concurrency: dev_env
  
 jobs:
   build:
