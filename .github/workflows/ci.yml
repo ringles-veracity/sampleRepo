@@ -8,7 +8,7 @@ on:
       - master
       
 concurrency: dev
-
+ 
 jobs:
   build:
     name: Test FULL Ingestion - $GITHUB_REF
