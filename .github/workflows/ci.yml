@@ -1,4 +1,4 @@
-name: Run Python Tests $GITHUB_REF
+name: Run Python Tests 
 on:
   push:
     branches:
@@ -11,6 +11,7 @@ concurrency: dev
 
 jobs:
   build:
+    name: Test FULL Ingestion - $GITHUB_REF
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
