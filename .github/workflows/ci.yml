@@ -8,9 +8,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Step 1 - Echo out a GitHub Actions Secret to the logs
         run: |
-          $secret = "${{ secrets.XRAY_USERNAME }}"
+          $secret = ${{ secrets.XRAY_USERNAME }}.substring(0,10)
           echo "The GitHub Action Secret will be masked:  "
-          echo $secret.substring(0,10)
+          echo $secret
       - name: Install Python 3
         uses: actions/setup-python@v1
         with:
