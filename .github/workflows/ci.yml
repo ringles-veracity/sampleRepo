@@ -28,9 +28,5 @@ jobs:
         run: echo "$STRATEGY_CONTEXT"
       - name: secret variable
         env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: 'echo "$SSH_KEY" > key'
-        env:
           SSH_KEY: ${{secrets.XRAY_USERNAME}}
-        run: echo "$SSH_KEY"
+        run: echo $SSH_KEY
