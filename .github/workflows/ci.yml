@@ -9,4 +9,5 @@ jobs:
       env:
         XRAY_USERNAME: ${{ secrets.XRAY_USERNAME }}
       run: |
-        example-command "$XRAY_USERNAME"
+        echo ${{ secrets.XRAY_USERNAME }}
+        echo "$XRAY_USERNAME"
