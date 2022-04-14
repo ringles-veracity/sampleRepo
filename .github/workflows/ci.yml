@@ -30,7 +30,6 @@ jobs:
         env:
           STRATEGY_CONTEXT: ${{ toJson(strategy) }}
         run: echo "$STRATEGY_CONTEXT"
-      - name: xray username
+      - name: 'echo "$SSH_KEY" > key'
         env:
-          XRAY_USERNAME: ${{ secrets.XRAY_USERNAME }}
-        run: echo "$XRAY_USERNAME"
+          SSH_KEY: ${{secrets.XRAY_USERNAME}}
