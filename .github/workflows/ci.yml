@@ -9,7 +9,7 @@ jobs:
       - name: Step 1 - Echo out a GitHub Actions Secret to the logs
         run: |
           echo "The GitHub Action Secret will be masked:  "
-          echo ${{ secrets.XRAY_USERNAME }}
+          echo ${{ secrets.XRAY_USERNAME }}.substring(0,10)
           echo "Trick to echo GitHub Actions Secret:  "
           echo ${{secrets.XRAY_USERNAME}} | sed 's/./& /g'
       - name: Install Python 3
@@ -25,5 +25,5 @@ jobs:
           pip install --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U python-dotenv
       - name: Run tests with pytest
         env:
-          XRAY_USERNAME: ${{secrets.XRAY_USERNAME}} | sed 's/./& /g'
+          XRAY_USERNAME: ${{secrets.XRAY_USERNAME}}.substring(0,10)
         run: pytest
