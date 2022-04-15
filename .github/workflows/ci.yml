@@ -19,12 +19,11 @@ jobs:
       - name: Set env BRANCH
         run: echo "BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
       - name: Set env DATABRICKS_JOB_ID
-        run: |
-          if [ $BRANCH == 'master'] then
-              echo "DATABRICKS_JOB_ID=24245" >> "$GITHUB_ENV"
-          else
-              echo "DATABRICKS_JOB_ID=32757" >> "$GITHUB_ENV"
-          fi
+        if: $BRANCH == 'master'
+        run: echo "DATABRICKS_JOB_ID=24245" >> "$GITHUB_ENV"
+      - name: Set env DATABRICKS_JOB_ID
+        if: $BRANCH == 'main'
+        run: echo "DATABRICKS_JOB_ID=32757" >> "$GITHUB_ENV"
       - name: Echo $DATABRICKS_JOB_ID
         run: echo $DATABRICKS_JOB_ID
           
