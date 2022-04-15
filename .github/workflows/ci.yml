@@ -1,41 +1,30 @@
 name: Run Python Tests
-on:
+on: 
   push:
     branches:
-      - master
+      - development
+      - autotest
+  
   pull_request:
-    branches:
-      - master
+    branches: 
+      - staging  
+
   workflow_dispatch:
-      
-concurrency: dev_env
- 
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Dump GitHub context Master
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
+      - name: Set env BRANCH
+        run: echo "BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
+      - name: Set env DATABRICKS_JOB_ID
+        run: |
+          if [[ $BRANCH == 'master']]; then
+              echo "DATABRICKS_JOB_ID=24245" >> "$GITHUB_ENV"
+          else
+              echo "DATABRICKS_JOB_ID=32757" >> "$GITHUB_ENV"
+          fi
+      - name: Echo $DATABRICKS_JOB_ID
+        run: echo $DATABRICKS_JOB_ID
+          
