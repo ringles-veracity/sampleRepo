@@ -15,13 +15,14 @@ jobs:
         env:
           PR_NUMBER: ${{ github.ref_name }}
         run: echo $PR_NUMBER
+      - name: Set Output2
+        if: ${{ github.ref_name }} == "master"
+        env:
+          OUTPUT: 321
       - name: Set Output
         if: ${{ github.ref_name }} == "main"
-        run:
-          OUTPUT=${{ github.ref_name }} &&
-          echo "::set-output name=OUTPUT::$OUTPUT"
         env:
-          OUTPUT: $OUTPUT
+          OUTPUT: 123
       - name: Print Output
         run: echo $OUTPUT
           
