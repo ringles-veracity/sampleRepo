@@ -17,6 +17,11 @@ jobs:
       DATABRICKS_JOB_ID: 12345
     steps:
       - uses: actions/checkout@v2
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
       - name: Set env DATABRICKS_JOB_ID
         if: github.ref_name == 'master'
         run: echo "DATABRICKS_JOB_ID=24245" >> "$GITHUB_ENV"
@@ -25,5 +30,4 @@ jobs:
         run: echo "DATABRICKS_JOB_ID=32757" >> "$GITHUB_ENV"
       - name: Echo $DATABRICKS_JOB_ID
         run: echo $DATABRICKS_JOB_ID
-      - name: Echo dump
-        run: echo "$GITHUB_CONTEXT"
+     
