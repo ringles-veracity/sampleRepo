@@ -21,7 +21,6 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
       - name: Set env DATABRICKS_JOB_ID
         if: github.ref_name == 'master'
         run: echo "DATABRICKS_JOB_ID=24245" >> "$GITHUB_ENV"
