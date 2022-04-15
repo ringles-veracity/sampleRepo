@@ -2,12 +2,11 @@ name: Run Python Tests
 on: 
   push:
     branches:
-      - development
-      - autotest
+      - master
   
   pull_request:
     branches: 
-      - staging  
+      - master 
 
   workflow_dispatch:
 
