@@ -19,10 +19,12 @@ jobs:
         if: ${{ github.ref_name }} == "master"
         env:
           OUTPUT: 321
+        run: echo $OUTPUT
       - name: Set Output
         if: ${{ github.ref_name }} == "main"
         env:
           OUTPUT: 123
+        run: echo $OUTPUT
       - name: Print Output
         run: echo $OUTPUT
           
