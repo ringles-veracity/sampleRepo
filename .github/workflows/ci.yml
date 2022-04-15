@@ -6,25 +6,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Using Variables
-        id: set_variable
-        env:
-          PR_NUMBER: ${{ github.ref_name }}
-        run: echo $PR_NUMBER
-      - name: Set Output2
-        if: ${{ github.ref_name }} == "master"
-        env:
-          OUTPUT: 321
-        run: echo $OUTPUT
-      - name: Set Output
-        if: ${{ github.ref_name }} == "main"
-        env:
-          OUTPUT: 123
-        run: echo $OUTPUT
-      - name: Print Output
-        run: echo $OUTPUT
+      - name: Set env BRANCH
+        run: echo "BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
+        
+      - name: Set env NEED
+        run: |
+          if [[ $BRANCH == 'master' && $GITHUB_EVENT_NAME == 'push' ]]; then
+              echo "NEED=true" >> "$GITHUB_ENV"
+          else
+              echo "NEED=false" >> "$GITHUB_ENV"
+          fi
+
+      - name: Echo $NEED
+        run: echo $NEED
+      - name: Echo env.NEED
+        run: echo env.NEEDT
           
