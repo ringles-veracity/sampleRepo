@@ -34,4 +34,6 @@ jobs:
         run: echo "DATABRICKS_JOB_ID=32757" >> "$GITHUB_ENV"
       - name: Echo $DATABRICKS_JOB_ID
         run: echo $DATABRICKS_JOB_ID
+      - name: Echo testSet
+        run: echo "Log level: ${{ github.event.inputs.testSet }}"
           
