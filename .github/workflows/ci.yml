@@ -35,5 +35,5 @@ jobs:
       - name: Echo $DATABRICKS_JOB_ID
         run: echo $DATABRICKS_JOB_ID
       - name: Echo testSet
-        run: echo "Log level: ${{ github.event.inputs.testSet }}"
+        run: echo "Log level ${{ github.event.inputs.testSet }}"
           
