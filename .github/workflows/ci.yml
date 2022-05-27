@@ -10,7 +10,15 @@ on:
       - staging  
 
   workflow_dispatch:
-
+    inputs:
+      testSet:
+        type: choice
+        description: What type of testing
+        options: 
+        - Core
+        - Regression
+        default: Regression
+        required: true
 jobs:
   build:
     runs-on: ubuntu-latest
