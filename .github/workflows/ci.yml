@@ -10,7 +10,15 @@ on:
       - staging  
 
   workflow_dispatch:
-
+    inputs:
+      testSet:
+        type: choice
+        description: What type of testing
+        options: 
+        - Core
+        - Regression
+        default: Regression
+        required: true
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,12 +26,18 @@ jobs:
       DATABRICKS_JOB_ID: 12345
     steps:
       - uses: actions/checkout@v2
-      - name: Set env DATABRICKS_JOB_ID
-        if: github.ref_name == 'master'
-        run: echo "DATABRICKS_JOB_ID=24245" >> "$GITHUB_ENV"
-      - name: Set env DATABRICKS_JOB_ID
-        if: github.ref_name == 'main'
-        run: echo "DATABRICKS_JOB_ID=32757" >> "$GITHUB_ENV"
-      - name: Echo $DATABRICKS_JOB_ID
-        run: echo $DATABRICKS_JOB_ID
+      - name: Set env TEST_BRANCH
+        run: echo "TEST_BRANCH=${{ github.base_ref }}" >> "$GITHUB_ENV"
+      - name: if autotest, set env DATABRICKS_JOB_ID and TEST_BRANCH
+        if: github.base_ref == 'autotest'
+        run: |
+          echo "DATABRICKS_JOB_ID=509671212611352" >> "$GITHUB_ENV"
+          echo "TEST_BRANCH=development" >> "$GITHUB_ENV"
+      - name: Set env TEST_SET
+        run: echo "TEST_SET=${{ inputs.testset }}" >> "$GITHUB_ENV"
+      - name: Echo
+        run: |
+          echo ${{ github.base_ref }}
+          echo ${{ github.head_ref }}
+          echo ${{ github.ref_name }}
           
