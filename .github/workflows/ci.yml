@@ -29,10 +29,15 @@ jobs:
       - name: Set env TEST_BRANCH
         run: echo "TEST_BRANCH=${{ github.base_ref }}" >> "$GITHUB_ENV"
       - name: if autotest, set env DATABRICKS_JOB_ID and TEST_BRANCH
-        if: github.base_ref == 'autotest' || GITHUB_REF == 'main'
+        if: github.base_ref == 'autotest'
         run: |
           echo "DATABRICKS_JOB_ID=509671212611352" >> "$GITHUB_ENV"
           echo "TEST_BRANCH=development" >> "$GITHUB_ENV"
       - name: Set env TEST_SET
         run: echo "TEST_SET=${{ inputs.testset }}" >> "$GITHUB_ENV"
+      - name: Echo
+        run: |
+          echo ${{ github.base_ref }}" 
+          echo ${{ github.head_ref }}" 
+          echo ${{ github.ref_name }}"
           
