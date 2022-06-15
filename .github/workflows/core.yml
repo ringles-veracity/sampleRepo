@@ -14,7 +14,7 @@ jobs:
 
   test-autotest:
     name: Run Test Automation on Test
-    runs-on: self-hosted
+    runs-on: [self-hosted]
     if: github.event_name == 'workflow_dispatch' && github.ref_name == 'autotest'
     steps:
       - uses: actions/checkout@v2
@@ -26,7 +26,7 @@ jobs:
 
   test-development:
     name: Run Test Automation on Development
-    runs-on: self-hosted
+    runs-on: [self-hosted]
     if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'development'
     steps:
       - uses: actions/checkout@v2
@@ -38,7 +38,7 @@ jobs:
 
   test-staging:
     name: Run Test Automation on Staging
-    runs-on: self-hosted
+    runs-on: [self-hosted]
     if: (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref_name == 'staging'
     steps:
       - uses: actions/checkout@v2
