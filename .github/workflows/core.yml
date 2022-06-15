@@ -6,21 +6,46 @@ on:
   
   pull_request:
     branches: 
+      - autotest
       - staging  
 
   workflow_dispatch:
 
 jobs:
-  test-development:
-    name: Run Test Automation on Development
-    runs-on: ubuntu-latest
+
+  test-autotest:
+    name: Run Test Automation on Test
+    runs-on: self-hosted
+    if: (github.event_name = 'pull_request' || github.event_name = 'workflow_dispatch') && github.ref_name == 'autotest'
     steps:
       - uses: actions/checkout@v2
       - name: Echo
         run: |
+          echo 'Test Test'
           echo ${{ github.event_name }}
-          echo ${{ github.ref }}
-          echo ${{ github.head_ref }}
-          echo ${{ github.base_ref }}
+          echo ${{ github.ref_name }}
+
+  test-development:
+    name: Run Test Automation on Development
+    runs-on: self-hosted
+    if: (github.event_name = 'push' || github.event_name = 'workflow_dispatch') && github.ref_name == 'development'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Echo
+        run: |
+          echo 'Test Development'
+          echo ${{ github.event_name }}
+          echo ${{ github.ref_name }}
+
+  test-staging:
+    name: Run Test Automation on Staging
+    runs-on: self-hosted
+    if: (github.event_name = 'pull_request' || github.event_name = 'workflow_dispatch') && github.ref_name == 'staging'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Echo
+        run: |
+         echo 'Test Staging'
+          echo ${{ github.event_name }}
           echo ${{ github.ref_name }}
           
