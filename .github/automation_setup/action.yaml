@@ -1,0 +1,85 @@
+name: Test Automation
+
+inputs:
+  TEST_SET:
+    description: "type of testset to run"
+    required: true
+    type: string
+  DATABRICKS_VAULT_URL:
+    description: "Databrick Vault URL"
+    required: true
+    type: string
+  DATABRICKS_URL:
+    description: "Databrick URL"
+    required: true
+    type: string
+  DATABRICKS_CLIENT_ID:
+    description: "Databrick Client ID"
+    required: true
+    type: string
+  DATABRICKS_CLIENT_SECRET:
+    description: "Databrick Client Secret"
+    required: true
+    type: string
+  DATABRICKS_JOB_ID:
+    description: "Databrick Job ID"
+    required: true
+    type: string
+  TEST_BRANCH:
+    description: "Test Environment - Branch"
+    required: true
+    type: string
+
+env:
+  PYENV_ROOT: /opt/python/versions
+  PYENV_HOME: /opt/python/pyenv
+
+runs:
+  using: composite
+  steps:
+    - name: Set env Databricks
+      run: |
+        echo "DATABRICKS_VAULT_URL=${{ inputs.databricks_vault_url }}" >> "$GITHUB_ENV"
+        echo "DATABRICKS_URL=${{ inputs.databricks_url }}" >> "$GITHUB_ENV"
+        echo "DATABRICKS_CLIENT_ID=${{ inputs.databricks_client_id }}" >> "$GITHUB_ENV"
+        echo "DATABRICKS_CLIENT_SECRET=${{ inputs.databricks_client_secret }}" >> "$GITHUB_ENV"
+        echo "DATABRICKS_JOB_ID=${{ inputs.databricks_job_id }}" >> "$GITHUB_ENV"
+    - name: Set env Test
+      run: |
+        echo "TEST_BRANCH=${{ inputs.test_branch }}" >> "$GITHUB_ENV"
+        echo "TEST_SET=${{ inputs.testset }}" >> "$GITHUB_ENV" 
+
+    - name: Install pyenv
+      run: |
+        mkdir -p ${{ env.PYENV_HOME }}
+        rm -rf ${{ env.PYENV_HOME }}
+        mkdir -p ${{ env.PYENV_ROOT }}
+        git clone https://github.com/pyenv/pyenv.git ${{ env.PYENV_HOME }}
+
+    - name: Install python version
+      run: |
+        ${{ env.PYENV_HOME }}/bin/pyenv install --skip-existing ${{ matrix.python-version }}
+        ${{ env.PYENV_HOME }}/bin/pyenv rehash
+
+    - name: setup PATH
+      run: |
+        echo "${{ env.PYENV_ROOT }}/shims" >> $GITHUB_PATH
+
+    - name: Run Python Command
+      run: |
+        PYENV_VERSION=${{ matrix.python-version }}
+        export PYENV_VERSION
+        python -c "import sys; print(sys.version)"
+
+    - name: Install dependencies
+      run: |
+        ${{ env.PYENV_HOME }}/bin/pyenv global ${{ matrix.python-version }}
+        pip install --upgrade pip
+        pip -V
+        pip install --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --trusted-host pypi.org pip-tools
+        pip install --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U pytest
+        pip install --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U python-dotenv
+
+    - name: Run tests
+      run: |
+        python -m pytest -sv test/test_capitalize.py

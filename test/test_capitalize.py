@@ -1,11 +1,10 @@
 import os
 from dotenv import load_dotenv
 
-def capitalize_string(s):
-    if not isinstance(s, str):
-        raise TypeError('Please provide a string')
-    return s.capitalize()
-
-def test_capitalize_string():
+def test_main():
     load_dotenv()
-    assert os.environ["XRAY_USERNAME"] == 'Test'
+    print(os.environ["DATABRICKS_VAULT_URL"])
+    print(os.environ["DATABRICKS_URL"])
+    print(os.environ["TEST_BRANCH"])
+    print(os.environ["TEST_SET"])
+    assert 'Test' == 'Test'
