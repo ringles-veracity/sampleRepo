@@ -6,7 +6,6 @@ on:
   
   pull_request:
     branches: 
-      - autotest
       - staging  
 
   workflow_dispatch:
@@ -16,7 +15,7 @@ jobs:
   test-autotest:
     name: Run Test Automation on Test
     runs-on: self-hosted
-    if: (github.event_name = 'pull_request' || github.event_name = 'workflow_dispatch') && github.ref_name == 'autotest'
+    if: github.event_name = 'workflow_dispatch' && github.ref_name == 'autotest'
     steps:
       - uses: actions/checkout@v2
       - name: Echo
