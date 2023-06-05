@@ -31,9 +31,12 @@ jobs:
           echo 'On Demad Test'
           echo ${{ github.event_name }}
           echo ${{ github.ref_name }}
-          
-  test-push:
-    name: Run Test Automation on Push
+          echo "ENV_PREFIX=DEV" >> $GITHUB_ENV
+          echo ${{ ENV_PREFIX }}
+          echo ${{ env.ENV_PREFIX }}
+
+  test-staging:
+    name: Run Test Automation on Staging
     runs-on: [self-hosted]
     if: github.event_name == 'push'
     steps:
