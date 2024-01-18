@@ -8,7 +8,7 @@ jobs:
 
     workflow_job:
         name: Run Workflow One
-        runs-on: [self-hosted]
+        runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
             - name: Echo
