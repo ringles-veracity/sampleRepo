@@ -1,0 +1,20 @@
+name: Workflow Two
+
+on:
+    workflow_run:
+      workflows: [Workflow Two]
+      types:
+        - completed
+
+jobs:
+
+    workflow_job:
+        name: Run Workflow Two
+        runs-on: [self-hosted]
+        steps:
+            - uses: actions/checkout@v2
+            - name: Echo
+              run: |
+               echo 'Test Workflow Two'
+                echo ${{ github.event_name }}
+                echo ${{ github.ref_name }}
