@@ -3,19 +3,15 @@ on:
   push:
     branches:
       - development
+      - staging
+      - main
   
-  pull_request:
-    branches: 
-      - staging  
-
   workflow_dispatch:
 
 jobs:
-
-  test-autotest:
-    name: Run Test Automation on Test
+  test:
+    name: Run Test Automation
     runs-on: [self-hosted]
-    if: github.event_name == 'workflow_dispatch' && github.ref_name == 'autotest'
     steps:
       - uses: actions/checkout@v2
       - name: Echo
@@ -23,28 +19,31 @@ jobs:
           echo 'Test Test'
           echo ${{ github.event_name }}
           echo ${{ github.ref_name }}
-
-  test-development:
-    name: Run Test Automation on Development
+          
+  test-demand:
+    name: Run Test Automation on Demand
     runs-on: [self-hosted]
-    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref_name == 'development'
+    if: github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v2
       - name: Echo
         run: |
-          echo 'Test Development'
+          echo 'On Demad Test'
           echo ${{ github.event_name }}
           echo ${{ github.ref_name }}
+          echo "ENV_PREFIX=DEV" >> $GITHUB_ENV
+          echo ${{ env.ENV_PREFIX }}
 
   test-staging:
     name: Run Test Automation on Staging
     runs-on: [self-hosted]
-    if: (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch') && github.ref_name == 'staging'
+    if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
       - name: Echo
         run: |
-         echo 'Test Staging'
+          echo 'Push Test'
           echo ${{ github.event_name }}
           echo ${{ github.ref_name }}
+
           
