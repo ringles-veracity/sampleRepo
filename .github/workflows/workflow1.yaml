@@ -1,7 +1,7 @@
 name: Workflow One
 
 on:
-  pull_request:
+  push:
     branches: 
         - autotest  
 jobs:
