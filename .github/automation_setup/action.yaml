@@ -34,6 +34,10 @@ env:
   PYENV_ROOT: /opt/python/versions
   PYENV_HOME: /opt/python/pyenv
 
+strategy:
+      matrix:
+        python-version: [ 3.9.1 ]
+
 runs:
   using: composite
   steps:
